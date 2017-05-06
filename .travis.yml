@@ -2,8 +2,8 @@ language: csharp
 solution: "./Fibonacci/Fibonacci.sln"
 before_install:
   - pwd
-  - travis_retry nuget install xunit.runners -version 1.9.2 -OutputDirectory  ./Fibonacci/packages
-  - travis_retry nuget install coveralls.net -OutputDirectory ./Fibonacci/packages
+  - travis_retry nuget install xunit.runners -version 1.9.2 ./Fibonacci/packages
+  - travis_retry nuget install coveralls.net ./Fibonacci/packages
 install:
   - travis_retry nuget restore -source "https://www.nuget.org/api/v2" ./Fibonacci/Fibonacci.sln
   #- chmod +x ./Fibonacci/packages/xunit.runners.1.9.2/tools/xunit.console.clr4.exe
@@ -22,7 +22,7 @@ install:
 script:
   - xbuild ./Fibonacci/Fibonacci.sln
   - export LD_LIBRARY_PATH=/usr/local/lib
-  - mono ./Fibonacci/packages/xunit.runner.console*/tools/xunit.console.exe ./Fibonacci/Fibonacci.Tests/bin/Debug/Fibonacci.Tests.dll
+  - mono --debug --profile=monocov:outfile=monocovCoverage.cov,+[Fibonacci],+[Fibonacci.Tests] ./Fibonacci/packages/xunit.runners.1.9.2/tools/xunit.console.clr4.exe ./Fibonacci/Fibonacci.Tests/bin/Debug/Fibonacci.Tests.dll  /noshadow
   - monocov --export-xml=monocovCoverage monocovCoverage.cov
   - REPO_COMMIT_AUTHOR=$(git show -s --pretty=format:"%cn")
   - REPO_COMMIT_AUTHOR_EMAIL=$(git show -s --pretty=format:"%ce")
