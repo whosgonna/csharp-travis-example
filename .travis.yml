@@ -17,7 +17,7 @@ install:
   - ./configure
   - make
   - sudo make install
-  - cd ../../csMACnz/Coveralls.net-Samples
+  - cd ../../whosgonna/csharp-travis-example
 script:
   - xbuild ./Fibonacci/Fibonacci.sln
   - export LD_LIBRARY_PATH=/usr/local/lib
