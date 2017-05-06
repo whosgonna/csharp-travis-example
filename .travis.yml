@@ -3,6 +3,7 @@ solution: "./Fibonacci/Fibonacci.sln"
 before_install:
   - pwd
   - travis_retry nuget install xunit.runners -version 1.9.2 ./Fibonacci/packages
+  - travis_retry nuget install coveralls.net ./Fibonacci/packages
 install:
   - travis_retry nuget restore -source "https://www.nuget.org/api/v2" ./Fibonacci/Fibonacci.sln
   #- chmod +x ./Fibonacci/packages/xunit.runners.1.9.2/tools/xunit.console.clr4.exe
@@ -32,4 +33,5 @@ script:
   - echo $REPO_COMMIT_AUTHOR_EMAIL
   - echo $REPO_COMMIT_MESSAGE
   - echo $TRAVIS_JOB_ID
+  - ls ./Fibonacci/packages
   - mono ./Fibonacci/packages/coveralls.net.0.6.0/tools/csmacnz.Coveralls.exe --monocov -i ./monocovCoverage --repoToken $COVERALLS_REPO_TOKEN --commitId $TRAVIS_COMMIT --commitBranch $TRAVIS_BRANCH --commitAuthor "$REPO_COMMIT_AUTHOR" --commitEmail "$REPO_COMMIT_AUTHOR_EMAIL" --commitMessage "$REPO_COMMIT_MESSAGE" --jobId $TRAVIS_JOB_ID  --serviceName "travis-ci"  --useRelativePaths
