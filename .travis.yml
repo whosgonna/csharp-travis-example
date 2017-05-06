@@ -1,8 +1,10 @@
 language: csharp
 solution: "./Fibonacci/Fibonacci.sln"
+before_install:
+  - travis_retry nuget install xunit.runners -version 1.9.2
 install:
   - travis_retry nuget restore -source "https://www.nuget.org/api/v2" ./Fibonacci/Fibonacci.sln
-  - chmod +x ./Fibonacci/packages/xunit.runners.2.1.0/tools/xunit.console.clr4.exe
+  - chmod +x ./Fibonacci/packages/xunit.runners.1.9.2/tools/xunit.console.clr4.exe
   - sudo apt-get install gtk-sharp2
   - curl -sS https://api.nuget.org/packages/mono.cecil.0.9.5.4.nupkg > /tmp/mono.cecil.0.9.5.4.nupkg.zip
   - unzip /tmp/mono.cecil.0.9.5.4.nupkg.zip -d /tmp/cecil
@@ -18,6 +20,7 @@ install:
 script:
   - xbuild ./Fibonacci/Fibonacci.sln
   - export LD_LIBRARY_PATH=/usr/local/lib
+  - ls ./Fibonacci/packages/
   - mono ./Fibonacci/packages/xunit.runner.console*/tools/xunit.console.exe ./Fibonacci/Fibonacci.Tests/bin/Debug/Fibonacci.Tests.dll
   - monocov --export-xml=monocovCoverage monocovCoverage.cov
   - REPO_COMMIT_AUTHOR=$(git show -s --pretty=format:"%cn")
