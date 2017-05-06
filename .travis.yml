@@ -1,6 +1,6 @@
 language: csharp
 solution: "./Fibonacci/Fibonacci.sln"
-#before_install:
+before_install:
   - pwd
   - travis_retry nuget install xunit.runners -version 1.9.2 ./Fibonacci/packages
 install:
