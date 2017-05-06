@@ -2,8 +2,8 @@ language: csharp
 solution: "./Fibonacci/Fibonacci.sln"
 before_install:
   - pwd
-  - travis_retry nuget install xunit.runners -version 1.9.2 ./Fibonacci/packages
-  - travis_retry nuget install coveralls.net ./Fibonacci/packages
+  - travis_retry nuget install xunit.runners -version 1.9.2 -OutputDirectory  ./Fibonacci/packages
+  - travis_retry nuget install coveralls.net -OutputDirectory ./Fibonacci/packages
 install:
   - travis_retry nuget restore -source "https://www.nuget.org/api/v2" ./Fibonacci/Fibonacci.sln
   #- chmod +x ./Fibonacci/packages/xunit.runners.1.9.2/tools/xunit.console.clr4.exe
